@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ReviewsSite.Models.Review>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Main.css" rel="stylesheet" />
+</head>
+<body>
+    <main>
+
+        <h1>Movie Reviews</h1>
+
+        @foreach (var review in Model)
+        {
+                <div class="movie-banner" style="background-image: url(@review.ImageUrl)">
+                    <a href="/Home/Details/@review.Id">
+                        @review.Title
+                    </a>
+                </div>
+        }
+    </main>
+</body>
+</html>

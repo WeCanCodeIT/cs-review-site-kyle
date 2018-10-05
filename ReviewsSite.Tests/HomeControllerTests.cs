@@ -9,12 +9,18 @@ namespace ReviewsSite.Tests
 {
     public class HomeControllerTests
     {
+        private IReviewRepository reviewRepo;
+        private HomeController underTest;
+
+        public HomeControllerTests()
+        {
+            reviewRepo = Substitute.For<IReviewRepository>();
+            underTest = new HomeController(reviewRepo);
+        }
+
         [Fact]
         public void Index_Returns_A_View()
         {
-            var reviewRepo = Substitute.For<IReviewRepository>();
-            var underTest = new HomeController(reviewRepo);
-
             var result = underTest.Index();
 
             Assert.IsType<ViewResult>(result);
@@ -24,13 +30,30 @@ namespace ReviewsSite.Tests
         public void Index_Passes_All_Reviews_To_View()
         {
             var expectedReviews = new List<Review>();
-            var reviewRepo = Substitute.For<IReviewRepository>();
             reviewRepo.GetAll().Returns(expectedReviews);
-            var underTest = new HomeController(reviewRepo);
 
             var result = underTest.Index();
 
             Assert.Equal(expectedReviews, result.Model);
+        }
+
+        [Fact]
+        public void Details_Returns_A_View()
+        {
+            var result = underTest.Details(1);
+
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void Details_Passes_Review_To_View()
+        {
+            var expectedReview = new Review();
+            reviewRepo.FindById(1).Returns(expectedReview);
+
+            var result = underTest.Details(1);
+
+            Assert.Equal(expectedReview, result.Model);
         }
     }
 }

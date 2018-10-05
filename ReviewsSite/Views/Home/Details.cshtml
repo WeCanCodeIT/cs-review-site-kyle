@@ -1,0 +1,29 @@
+﻿@model ReviewsSite.Models.Review
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+    <link href="~/Main.css" rel="stylesheet" />
+</head>
+<body>
+    <main>
+        <div class="movie-banner" style="background-image: url(@Model.ImageUrl)">
+            @Model.Title
+        </div>
+        Date: @Model.Date.ToShortDateString()
+        Category: @Model.ReviewCategory
+        <p>
+            @Model.Content
+        </p>
+
+        <a href="/">Back to List</a>
+    </main>
+</body>
+</html>

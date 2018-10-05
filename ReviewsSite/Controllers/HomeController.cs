@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ReviewsSite.Controllers
 {
@@ -19,6 +15,12 @@ namespace ReviewsSite.Controllers
         {
             var allReviews = reviewRepo.GetAll();
             return View(allReviews);
+        }
+
+        public ViewResult Details(int id)
+        {
+            var review = reviewRepo.FindById(id);
+            return View(review);
         }
     }
 }

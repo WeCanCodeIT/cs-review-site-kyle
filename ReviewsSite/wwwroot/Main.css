@@ -1,0 +1,22 @@
+﻿.movie-banner {
+    min-height: 20vh;
+    margin-bottom: 1rem;
+
+    background-position: top center;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    text-shadow: 2px 2px 2px #333;
+    font-size: 4rem;
+}
+
+.movie-banner a {
+    text-decoration: none;
+    color: white;
+    text-shadow: 2px 2px 2px #333;
+    font-size: 4rem;
+}

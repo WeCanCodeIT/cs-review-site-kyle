@@ -6,5 +6,6 @@ namespace ReviewsSite
     public interface IReviewRepository
     {
         List<Review> GetAll();
+        Review FindById(int id);
     }
 }
