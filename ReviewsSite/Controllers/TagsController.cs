@@ -13,9 +13,9 @@ namespace ReviewsSite.Controllers
             this.tagRepository = tagRepository;
         }
 
-        public ViewResult Details(int tagId)
+        public ViewResult Details(int id)
         {
-            var model = tagRepository.GetById(tagId);
+            var model = tagRepository.GetById(id);
             return View(model);
         }
     }

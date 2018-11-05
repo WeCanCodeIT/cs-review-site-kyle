@@ -12,7 +12,18 @@
     <title>Details</title>
 </head>
 <body>
-    <h1>Tags for</h1>
+    <h1>@Model.Text</h1>
+    
+    <ul>
+        @foreach (var reviewTag in Model.ReviewTags)
+        {
+            <li>
+                <a href="/Home/Details/@reviewTag.ReviewId">
+                    @reviewTag.Review.Title
+                </a>
+            </li>
+        }
+    </ul>
 
 </body>
 </html>
