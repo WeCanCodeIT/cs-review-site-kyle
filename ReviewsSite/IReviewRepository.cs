@@ -5,7 +5,7 @@ namespace ReviewsSite
 {
     public interface IReviewRepository
     {
-        List<Review> GetAll();
-        Review FindById(int id);
+        IEnumerable<Review> GetAll();
+        Review GetById(int id);
     }
 }

@@ -19,7 +19,7 @@ namespace ReviewsSite.Controllers
 
         public ViewResult Details(int id)
         {
-            var review = reviewRepo.FindById(id);
+            var review = reviewRepo.GetById(id);
             return View(review);
         }
     }

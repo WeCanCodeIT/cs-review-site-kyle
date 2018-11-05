@@ -49,7 +49,7 @@ namespace ReviewsSite.Tests
         public void Details_Passes_Review_To_View()
         {
             var expectedReview = new Review();
-            reviewRepo.FindById(1).Returns(expectedReview);
+            reviewRepo.GetById(1).Returns(expectedReview);
 
             var result = underTest.Details(1);
 

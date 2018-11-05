@@ -20,3 +20,11 @@
     text-shadow: 2px 2px 2px #333;
     font-size: 4rem;
 }
+
+.transparent {
+    opacity: 0;
+}
+
+#tags-list li {
+    transition: opacity linear 2s;
+}

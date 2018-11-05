@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ReviewsSite.Models
 {
@@ -10,5 +11,7 @@ namespace ReviewsSite.Models
         public string ReviewCategory { get; set; }
         public string Content { get; set; }
         public DateTime Date { get; set; }
+
+        public virtual List<ReviewTag> ReviewTags { get; set; }
     }
 }
