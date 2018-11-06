@@ -10,6 +10,11 @@ namespace ReviewsSite
         public TagRepository(MoviesContext db) : base(db)
         { }
 
+        public Tag FindByText(string text)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Tag> GetTagsForReviewId(int reviewId)
         {
             var result = from tag in GetAll()

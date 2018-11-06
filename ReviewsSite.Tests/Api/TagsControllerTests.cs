@@ -11,14 +11,14 @@ namespace ReviewsSite.Tests.Api
     public class TagsControllerTests
     {
         private ITagRepository tagsRepo;
-        private IReviewTagRepository reviewTagRepo;
+        private ITagLinker tagLinker;
         private TagsController underTest;
 
         public TagsControllerTests()
         {
             tagsRepo = Substitute.For<ITagRepository>();
-            reviewTagRepo = Substitute.For<IReviewTagRepository>();
-            underTest = new TagsController(tagsRepo, reviewTagRepo);
+            tagLinker = Substitute.For<ITagLinker>();
+            underTest = new TagsController(tagsRepo, tagLinker);
         }
 
         [Fact]
@@ -33,39 +33,15 @@ namespace ReviewsSite.Tests.Api
             Assert.Same(expectedTags, result);
         }
 
-       [Fact]
-       public void Post_Create_A_Tag()
+        [Fact]
+        public void Post_Links_Tag_To_Review()
         {
-            var tag = new Tag();
-            int reviewId = 42;
+            var tag = new Tag() { Text = "Hello" };
+            var reviewId = 42;
 
             underTest.Post(tag, reviewId);
 
-            tagsRepo.Received().Create(tag); 
-        }
-
-        [Fact]
-        public void Post_Associates_Tag_With_ReviewTag()
-        {
-            int reviewId = 42;
-            var tag = new Tag() { Id = 43 };
-
-            underTest.Post(tag, reviewId);
-
-            reviewTagRepo.Received().Create(
-                Arg.Is<ReviewTag>(rt => rt.ReviewId == reviewId && rt.TagId == tag.Id)
-            );
-        }
-
-        [Fact]
-        public void Post_Returns_Saved_Tag()
-        {
-            int reviewId = 42;
-            var tag = new Tag() { Id = 43 };
-
-            var result = underTest.Post(tag, reviewId);
-
-            Assert.Same(tag, result);
+            tagLinker.Received().LinkToReview(tag.Text, reviewId);
         }
     }
 }

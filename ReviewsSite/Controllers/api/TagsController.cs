@@ -11,12 +11,12 @@ namespace ReviewsSite.Controllers.api
     public class TagsController : ControllerBase
     {
         private readonly ITagRepository tagsRepo;
-        private readonly IReviewTagRepository reviewTagRepo;
+        private readonly ITagLinker tagLinker;
 
-        public TagsController(ITagRepository tagsRepo, IReviewTagRepository reviewTagRepo)
+        public TagsController(ITagRepository tagsRepo, ITagLinker tagLinker)
         {
             this.tagsRepo = tagsRepo;
-            this.reviewTagRepo = reviewTagRepo;
+            this.tagLinker = tagLinker;
         }
 
         [HttpGet("{reviewId}")]
@@ -28,9 +28,7 @@ namespace ReviewsSite.Controllers.api
         [HttpPost]
         public Tag Post([FromBody]Tag tag, int reviewId)
         {
-            tagsRepo.Create(tag);
-            reviewTagRepo.Create(new ReviewTag() { ReviewId = reviewId, TagId = tag.Id });
-            return tag;
+            return tagLinker.LinkToReview(tag.Text, reviewId);
         }
     }
 }
