@@ -32,7 +32,7 @@ namespace ReviewsSite.Tests
         }
 
         [Fact]
-        public void LinkToReview_Associates_Tag_With_ReviewTag()
+        public void LinkToReview_Associates_New_Tag_With_ReviewTag()
         {
             int reviewId = 42;
             var tagText = "Foo";
@@ -44,29 +44,6 @@ namespace ReviewsSite.Tests
             reviewTagRepo.Received().Create(
                 Arg.Is<ReviewTag>(rt => rt.ReviewId == reviewId && rt.TagId == expectedTagId)
             );
-        }
-
-        public class FakeTagsRepo : ITagRepository
-        {
-            public void Create(Tag t)
-            {
-                t.Id = 49;
-            }
-
-            public Tag FindByText(string text)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Tag GetById(int tagId)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerable<Tag> GetTagsForReviewId(int reviewId)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         [Fact]
@@ -93,10 +70,15 @@ namespace ReviewsSite.Tests
             tagsRepo.DidNotReceiveWithAnyArgs().Create(null);
         }
 
-        [Fact(Skip = "refactor first")]
+        [Fact]
         public void LinkToReview_Associates_Existing_Tag_Id_To_Review()
         {
+            var existingTag = new Tag() { Id = 42, Text = "Foo" };
+            tagsRepo.FindByText(existingTag.Text).Returns(existingTag);
 
+            underTest.LinkToReview(existingTag.Text, 14);
+
+            reviewTagRepo.Received().Create(Arg.Is<ReviewTag>(rt => rt.TagId == existingTag.Id));
         }
     }
 }

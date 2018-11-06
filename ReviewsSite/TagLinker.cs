@@ -17,19 +17,31 @@ namespace ReviewsSite
             this.reviewTagRepo = reviewTagRepo;
         }
 
-        public Tag LinkToReview(string text, int reviewId)
+        public Tag LinkToReview(string tagText, int reviewId)
         {
-            var tag = new Tag() { Text = text };
-            var existingTag = tagsRepo.FindByText(tag.Text);
-            if (existingTag == null)
-            {
-                tagsRepo.Create(tag);
-            }
+            var tag = FindOrCreateTag(tagText);
+            LinkReviewToTag(reviewId, tag);
+            return tag;
+        }
+
+        private void LinkReviewToTag(int reviewId, Tag tag)
+        {
             reviewTagRepo.Create(new ReviewTag()
             {
                 ReviewId = reviewId,
                 TagId = tag.Id
             });
+        }
+
+        private Tag FindOrCreateTag(string text)
+        {
+            var tag = tagsRepo.FindByText(text);
+            if (tag == null)
+            {
+                tag = new Tag() { Text = text };
+                tagsRepo.Create(tag);
+            }
+
             return tag;
         }
     }

@@ -12,7 +12,7 @@ namespace ReviewsSite
 
         public Tag FindByText(string text)
         {
-            throw new System.NotImplementedException();
+            return GetAll().FirstOrDefault(tag => tag.Text == text);
         }
 
         public IEnumerable<Tag> GetTagsForReviewId(int reviewId)
